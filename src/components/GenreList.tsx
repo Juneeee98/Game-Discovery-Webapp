@@ -1,9 +1,26 @@
-import { HStack, Image, List, ListItem, Text } from "@chakra-ui/react";
+import {
+  HStack,
+  Image,
+  List,
+  ListItem,
+  Spinner,
+  VStack,
+  Text,
+} from "@chakra-ui/react";
 import useGenres from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
 
 const GenreList = () => {
-  const { data } = useGenres();
+  const { data, isLoading, error } = useGenres();
+
+  if (error) return null;
+
+  if (isLoading)
+    return (
+      <VStack alignSelf="center" justifyContent="center" alignItems="center">
+        <Spinner />
+      </VStack>
+    );
   return (
     <List>
       {data.map((genre) => (
